@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Coin Flipper</title>
+<style type="text/css">
+h2 {
+  margin: .25rem;
+}
+
+div.container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 42%;
+    background-color: pink;
+}
+
+button {
+    padding: 10px 40px;
+    background-color: #ffeb3b94;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    
+}
+#coin {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  margin: 2rem 0rem;
+  transform-style: preserve-3d;
+
+}
+#totalcount{
+font-family: sans-serif;
+    font-size: 20px;	
+    padding-left: 5px;
+    padding-right: 25px;
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 29%;
+}
+#coin div {
+  width: 100%;
+  height: 100%;
+  border: 2px solid black;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  background-size: contain;
+  position: absolute;
+}
+span#headsCount {
+    padding-right: 25px;
+}
+.heads {
+    background-image: url("https://en.numista.com/catalogue/photos/inde/2311-original.jpg");
+}
+
+.animate-heads {
+  animation: flipHeads 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes flipHeads {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(1800deg);
+  }
+}
+
+.tails {
+    background-image: url("https://en.numista.com/catalogue/photos/inde/3165-original.jpg");
+  transform: rotateY(-180deg);
+}
+
+.animate-tails {
+  animation: flipTails 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes flipTails {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(1620deg);
+  }
+}
+body
+{
+    background-color: white;
+}
+center
+{
+    color: blue;
+    font-size: 31px;
+}
+}			
+</style>
+</head>
+
+<Body>
+    
+ <div class='container vertical-center'>
+  <h1>Task 1</h1>
+  <h1><center> Let's Flip a coin!</center></h1>
+
+  
+  <div id="coin" class=''>
+    <div id="heads" class="heads"></div>
+    <div id="tails" class="tails"></div>
+    </div>
+  <button id="flip" >Flip</button>
+  <p>Total Count:<span id="totalcount"></span> Heads: <span id="headsCount">0</span> Tails: <span id="tailsCount">0</span></p>
+  <p><span id="status"></span></p>
+</div>
+</Body>
+<script type="text/javascript">
+
+const coin = document.querySelector('#coin');
+const button = document.querySelector('#flip');
+const status = document.querySelector('#status');
+const heads = document.querySelector('#headsCount');
+const tails = document.querySelector('#tailsCount');
+
+let headsCount = 0;
+let tailsCount = 0;
+
+
+function deferFn(callback, ms) {
+  setTimeout(callback, ms); 
+}
+
+function processResult(result) {
+   if (result === 'heads') {
+      headsCount++;
+      heads.innerText = headsCount;
+    } else {
+      tailsCount++;
+      tails.innerText = tailsCount;
+    }
+    status.innerText = result.toUpperCase();
+    totalcount.innerText=headsCount+tailsCount;
+}
+
+function flipCoin() {
+  coin.setAttribute('class', '');
+  const random = Math.random();
+  const result = random < 0.5 ? 'heads' : 'tails';
+ deferFn(function() {
+   coin.setAttribute('class', 'animate-' + result);
+   deferFn(processResult.bind(null, result), 2900);
+ }, 100);
+}
+
+button.addEventListener('click', flipCoin);
+
+
+	
+</script>
+</html>
